@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import torchvision.transforms as transforms
 from torchvision.datasets import FashionMNIST
 
-DATA_DIR = './data'
+DATA_DIR = '../data'
 CLASSES = [
     'T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
     'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot',

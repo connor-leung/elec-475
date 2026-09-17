@@ -11,16 +11,30 @@ class autoencoderMLP4Layer(nn.Module):
         # ---------------------------------
         # Your code here ...
         # ---------------------------------
+        self.fc1 = nn.Linear(N_input, N2)
+        self.fc2 = nn.Linear(N2, N_bottleneck)
+        self.fc3 = nn.Linear(N_bottleneck, N2)
+        self.fc4 = nn.Linear(N2, N_output)
 
     def encode(self, X):
         # ---------------------------------
         # Your code here ...
         # ---------------------------------
+        X = self.fc1(X)
+        X = F.relu(X)
+        X = self.fc2(X)
+        X = F.relu(X)
+        return X
 
     def decode(self, X):
         # ---------------------------------
         # Your code here ...
         # ---------------------------------
+        X = self.fc3(X)
+        X = F.relu(X)
+        X = self.fc4(X)
+        X = F.sigmoid(X)
+        return X
 
     def forward(self, X):
         return self.decode(self.encode(X))
