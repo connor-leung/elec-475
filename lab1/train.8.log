@@ -1,0 +1,117 @@
+running main ...
+		bottleneck size =  8
+		n epochs =  30
+		batch size =  256
+		save file =  MLP.8.pth
+		plot file =  loss.MLP.8.png
+		using device  cpu
+==========================================================================================
+Layer (type:depth-idx)                   Output Shape              Param #
+==========================================================================================
+autoencoderMLP4Layer                     [1, 784]                  --
+├─Linear: 1-1                            [1, 392]                  307,720
+├─Linear: 1-2                            [1, 8]                    3,144
+├─Linear: 1-3                            [1, 392]                  3,528
+├─Linear: 1-4                            [1, 784]                  308,112
+==========================================================================================
+Total params: 622,504
+Trainable params: 622,504
+Non-trainable params: 0
+Total mult-adds (Units.MEGABYTES): 0.62
+==========================================================================================
+Input size (MB): 0.00
+Forward/backward pass size (MB): 0.01
+Params size (MB): 2.49
+Estimated Total Size (MB): 2.51
+==========================================================================================
+training ...
+epoch  1
+2026-09-24 16:50:18.193769 Epoch 1, Training loss 0.044215314058547325
+saving  loss.MLP.8.png
+epoch  2
+2026-09-24 16:50:20.076926 Epoch 2, Training loss 0.022798314001014893
+saving  loss.MLP.8.png
+epoch  3
+2026-09-24 16:50:21.589231 Epoch 3, Training loss 0.020485567539296253
+saving  loss.MLP.8.png
+epoch  4
+2026-09-24 16:50:23.100338 Epoch 4, Training loss 0.01965464899673107
+saving  loss.MLP.8.png
+epoch  5
+2026-09-24 16:50:24.524696 Epoch 5, Training loss 0.018979940016536002
+saving  loss.MLP.8.png
+epoch  6
+2026-09-24 16:50:25.966541 Epoch 6, Training loss 0.018005143835189495
+saving  loss.MLP.8.png
+epoch  7
+2026-09-24 16:50:27.534349 Epoch 7, Training loss 0.017566614609925035
+saving  loss.MLP.8.png
+epoch  8
+2026-09-24 16:50:29.025148 Epoch 8, Training loss 0.017251363888065866
+saving  loss.MLP.8.png
+epoch  9
+2026-09-24 16:50:30.588461 Epoch 9, Training loss 0.017052851244807245
+saving  loss.MLP.8.png
+epoch  10
+2026-09-24 16:50:32.076030 Epoch 10, Training loss 0.01684997717830095
+saving  loss.MLP.8.png
+epoch  11
+2026-09-24 16:50:33.586839 Epoch 11, Training loss 0.016718568244671567
+saving  loss.MLP.8.png
+epoch  12
+2026-09-24 16:50:35.047572 Epoch 12, Training loss 0.016559922944833622
+saving  loss.MLP.8.png
+epoch  13
+2026-09-24 16:50:36.524365 Epoch 13, Training loss 0.01647137381691248
+saving  loss.MLP.8.png
+epoch  14
+2026-09-24 16:50:38.124394 Epoch 14, Training loss 0.01631593841742328
+saving  loss.MLP.8.png
+epoch  15
+2026-09-24 16:50:39.587150 Epoch 15, Training loss 0.016202461806700586
+saving  loss.MLP.8.png
+epoch  16
+2026-09-24 16:50:41.059187 Epoch 16, Training loss 0.01622172827099232
+saving  loss.MLP.8.png
+epoch  17
+2026-09-24 16:50:42.517741 Epoch 17, Training loss 0.016064592161552704
+saving  loss.MLP.8.png
+epoch  18
+2026-09-24 16:50:43.988602 Epoch 18, Training loss 0.015938618529508723
+saving  loss.MLP.8.png
+epoch  19
+2026-09-24 16:50:45.598836 Epoch 19, Training loss 0.015907560922998065
+saving  loss.MLP.8.png
+epoch  20
+2026-09-24 16:50:47.086295 Epoch 20, Training loss 0.01586475393715057
+saving  loss.MLP.8.png
+epoch  21
+2026-09-24 16:50:48.564445 Epoch 21, Training loss 0.015775552982504062
+saving  loss.MLP.8.png
+epoch  22
+2026-09-24 16:50:50.043771 Epoch 22, Training loss 0.01575049082649515
+saving  loss.MLP.8.png
+epoch  23
+2026-09-24 16:50:51.488669 Epoch 23, Training loss 0.015653942303454623
+saving  loss.MLP.8.png
+epoch  24
+2026-09-24 16:50:52.912438 Epoch 24, Training loss 0.015658275513572895
+saving  loss.MLP.8.png
+epoch  25
+2026-09-24 16:50:54.400027 Epoch 25, Training loss 0.015593538480870268
+saving  loss.MLP.8.png
+epoch  26
+2026-09-24 16:50:55.903390 Epoch 26, Training loss 0.015533759108090654
+saving  loss.MLP.8.png
+epoch  27
+2026-09-24 16:50:57.345083 Epoch 27, Training loss 0.015505140770147455
+saving  loss.MLP.8.png
+epoch  28
+2026-09-24 16:50:58.785598 Epoch 28, Training loss 0.015456375364769013
+saving  loss.MLP.8.png
+epoch  29
+2026-09-24 16:51:00.297929 Epoch 29, Training loss 0.015422830893162718
+saving  loss.MLP.8.png
+epoch  30
+2026-09-24 16:51:01.752482 Epoch 30, Training loss 0.01537729217571781
+saving  loss.MLP.8.png
