@@ -1,5 +1,5 @@
 flowchart TD
     A[Input] --> | 784-392 Nodes| B[Hidden layer 1]
-    B --> | 392-N Nodes | C[Bottleneck N=8, 32, 128 784 Nodes]
-    C --> | N-392 Nodes | D[Hidden layer 2]
+    B --> | 392-x Nodes | C[Bottleneck x=8, 32, 128 784 Nodes]
+    C --> | x-392 Nodes | D[Hidden layer 2]
     D --> | 392-784 Nodes | E[Output]

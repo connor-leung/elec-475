@@ -1,0 +1,20 @@
+ELEC 475 Lab 1 - MLP Autoencoder
+All commands are run from the lab1 directory (the one containing ./data).
+FashionMNIST must be present in ./data (download=False in the scripts).
+
+Training (30 epochs each, batch size 256):
+  python src/train.py -z 8   -e 30 -b 256 -s MLP.8.pth   -p loss.MLP.8.png
+  python src/train.py -z 32  -e 30 -b 256 -s MLP.32.pth  -p loss.MLP.32.png
+  python src/train.py -z 128 -e 30 -b 256 -s MLP.128.pth -p loss.MLP.128.png
+
+Testing (interactive: enter a test-set index, -1 to quit):
+  python src/test.py -s MLP.32.pth -z 32
+
+Denoising (interactive; -n sets the noise scale, default 0.3):
+  python src/denoise.py -s MLP.32.pth -z 32 -n 0.3
+
+Bottleneck size comparison (step 1, writes compare.bottlenecks.png):
+  python src/compare.py
+
+Bottleneck interpolation (step 2, n = 8, writes interpolate.MLP.32.png):
+  python src/interpolate.py -s MLP.32.pth -z 32 -n 8
