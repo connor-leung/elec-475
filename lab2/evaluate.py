@@ -77,7 +77,8 @@ def evaluate_checkpoint(checkpoint_path: str, model_name: str, norm_type: str = 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="ELEC 475: Checkpoint Evaluation")
     parser.add_argument("--checkpoint", type=str, required=True, help="Path to .pth checkpoint file")
-    parser.add_argument("--model", type=str, default="lenet", choices=["lenet", "lenet_modern", "alexnet"])
+    parser.add_argument("--model", type=str, default="lenet",
+                        choices=["lenet", "lenet_modern", "alexnet", "zoo_alexnet"])
     parser.add_argument("--norm", type=str, default="bn", choices=["none", "lrn", "bn"])
     parser.add_argument("--dataset", type=str, default="cifar10", choices=["cifar10", "tiny_imagenet"])
     parser.add_argument("--data-dir", type=str, default="./data")

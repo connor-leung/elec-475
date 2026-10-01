@@ -70,7 +70,7 @@ if os.path.exists(tiny_path) and os.path.isdir(os.path.join(tiny_path, "train"))
 else:
     print("  Tiny ImageNet-200       : Not yet extracted into ./data/tiny-imagenet-200.")
     print("  Action: Download and extract tiny-imagenet-200 into ./data/ or run:")
-    print("    python utils/eda.py --dataset tiny_imagenet")
+    print("    python -m utils.eda --dataset tiny_imagenet")
 
 # 5. Exploratory Data Analysis (EDA) Artifact Check
 print("\n[Step 5: Exploratory Data Analysis (EDA) Artifact Check]")
@@ -100,7 +100,7 @@ else:
 
 if missing_cifar or missing_tiny:
     print("  Action: Run the dual-dataset EDA suite to generate all artifacts:")
-    print("    python utils/eda.py --dataset both")
+    print("    python -m utils.eda --dataset both")
 
 print("\n" + "=" * 76)
 print("PRE-LAB VERIFICATION SUCCEEDED! YOU ARE FULLY READY FOR THE IN-LAB SESSION.")

@@ -43,7 +43,7 @@ pip install -r requirements.txt
 #### 2. Run Pre-Lab Exploratory Data Analysis & Verification
 ```powershell
 # 1. Run Comprehensive Dual-Dataset Exploratory Data Analysis (EDA):
-python utils/eda.py --dataset both
+python -m utils.eda --dataset both
 
 # 2. Run Automated Environment & Dataset Verification:
 python prelab_verify.py
