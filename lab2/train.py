@@ -100,6 +100,10 @@ def main():
     parser.add_argument("--min-delta", type=float, default=1e-4, help="Minimum delta threshold to qualify as improvement")
     args = parser.parse_args()
 
+    # Allow --save-model to be a directory (e.g. "checkpoints/") by appending a default filename
+    if args.save_model and (args.save_model.endswith(("/", os.sep)) or os.path.isdir(args.save_model)):
+        args.save_model = os.path.join(args.save_model, f"{args.model}.pth")
+
     # Enforce global reproducibility across all RNG subsystems
     seed_everything(args.seed, deterministic=True)
 
