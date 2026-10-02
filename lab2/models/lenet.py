@@ -42,10 +42,12 @@ class LeNet5(nn.Module):
         #   6. AvgPool2: kernel_size=2, stride=2
         # ======================================================================
         self.feature_extractor = nn.Sequential(
-            # Replace with your sequential convolutional layers:
-            # nn.Conv2d(...),
-            # nn.Tanh(),
-            # ...
+            nn.Conv2d(in_channels, 6, kernel_size=5, stride=1, padding=0),   # (6, 60, 60)
+            nn.Tanh(),
+            nn.AvgPool2d(kernel_size=2, stride=2),                            # (6, 30, 30)
+            nn.Conv2d(6, 16, kernel_size=5, stride=1, padding=0),             # (16, 26, 26)
+            nn.Tanh(),
+            nn.AvgPool2d(kernel_size=2, stride=2),                            # (16, 13, 13)
         )
 
         # ======================================================================
@@ -59,10 +61,11 @@ class LeNet5(nn.Module):
         #   5. FC3 (Output): in_features = 84, out_features = num_classes
         # ======================================================================
         self.classifier = nn.Sequential(
-            # Replace with your dense linear layers:
-            # nn.Linear(...),
-            # nn.Tanh(),
-            # ...
+            nn.Linear(16 * 13 * 13, 120), # 2,704 features
+            nn.Tanh(),
+            nn.Linear(120, 84),
+            nn.Tanh(),
+            nn.Linear(84, num_classes),
         )
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
@@ -74,7 +77,9 @@ class LeNet5(nn.Module):
         # 3. Pass flattened vector through self.classifier
         # 4. Return the computed logits
         # ======================================================================
-        pass
+        x = self.feature_extractor(x)
+        x = torch.flatten(x, start_dim=1)
+        return self.classifier(x)
 
 if __name__ == "__main__":
     from torchinfo import summary
