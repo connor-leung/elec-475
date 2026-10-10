@@ -1,4 +1,18 @@
-venv
+# Virtual environments
+venv/
+.venv/
+
+# Python bytecode / caches
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+
+# Datasets (auto-downloaded by the lab scripts; never commit)
 lab1/data/*
 lab2/data/*
+
+# OS / editor files
 .DS_Store
+.vscode/
+.idea/
