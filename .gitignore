@@ -12,6 +12,12 @@ __pycache__/
 lab1/data/*
 lab2/data/*
 
+# Model checkpoints (too large for GitHub); keep only the ones the Lab 2 submission requires
+*.pth
+!lab2/checkpoints/lenet_baseline.pth
+!lab2/checkpoints/lenet_modern.pth
+!lab2/checkpoints/alexnet_bn.pth
+
 # OS / editor files
 .DS_Store
 .vscode/

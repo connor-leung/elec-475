@@ -1,0 +1,10 @@
+========================================================================================
+ELEC 475: Lab 2 Training Engine
+Device        : cuda (NVIDIA GeForce GTX 1070)
+Model         : LENET_MODERN (Norm: N/A)
+Dataset       : CIFAR10 (Augmentation: False)
+Hyperparams   : Epochs=10, BatchSize=128, LR=0.001, Seed=42
+Early Stopping: Disabled
+========================================================================================
+
+Initializing DataLoaders...
