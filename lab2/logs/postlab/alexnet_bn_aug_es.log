@@ -1,0 +1,148 @@
+========================================================================================
+ELEC 475: Lab 2 Training Engine
+Device        : cuda (NVIDIA GeForce GTX 1070)
+Model         : ALEXNET (Norm: BN)
+Dataset       : CIFAR10 (Augmentation: True)
+Hyperparams   : Epochs=30, BatchSize=128, LR=0.001, Seed=42
+Early Stopping: Enabled (Monitor: val_loss, Patience: 5)
+========================================================================================
+
+Initializing DataLoaders...
+Train batches: 390 (50000 samples), Val batches: 79, Classes: 10
+============================================================
+Computational Complexity Profile: ALEXNET (bn)
+Input Tensor Shape   : (1, 3, 64, 64)
+------------------------------------------------------------
+Total Parameters     : 6,611,402 (6.6114 M)
+Trainable Parameters : 6,611,402
+Multiply-Accumulates : 218,983,168 (218.98 MMACs)
+Floating Point Ops   : 437,966,336 (437.97 MFLOPs)
+Weight Size (FP32)   : 25.22 MB
+============================================================
+
+Detailed Layer Specification:
+==========================================================================================
+Layer (type:depth-idx)                   Output Shape              Param #
+==========================================================================================
+AlexNet64                                [1, 10]                   --
+├─Sequential: 1-1                        [1, 256, 3, 3]            --
+│    └─Conv2d: 2-1                       [1, 64, 32, 32]           4,864
+│    └─BatchNorm2d: 2-2                  [1, 64, 32, 32]           128
+│    └─ReLU: 2-3                         [1, 64, 32, 32]           --
+│    └─MaxPool2d: 2-4                    [1, 64, 15, 15]           --
+│    └─Conv2d: 2-5                       [1, 192, 15, 15]          307,392
+│    └─BatchNorm2d: 2-6                  [1, 192, 15, 15]          384
+│    └─ReLU: 2-7                         [1, 192, 15, 15]          --
+│    └─MaxPool2d: 2-8                    [1, 192, 7, 7]            --
+│    └─Conv2d: 2-9                       [1, 384, 7, 7]            663,936
+│    └─BatchNorm2d: 2-10                 [1, 384, 7, 7]            768
+│    └─ReLU: 2-11                        [1, 384, 7, 7]            --
+│    └─Conv2d: 2-12                      [1, 384, 7, 7]            1,327,488
+│    └─BatchNorm2d: 2-13                 [1, 384, 7, 7]            768
+│    └─ReLU: 2-14                        [1, 384, 7, 7]            --
+│    └─Conv2d: 2-15                      [1, 256, 7, 7]            884,992
+│    └─BatchNorm2d: 2-16                 [1, 256, 7, 7]            512
+│    └─ReLU: 2-17                        [1, 256, 7, 7]            --
+│    └─MaxPool2d: 2-18                   [1, 256, 3, 3]            --
+├─Sequential: 1-2                        [1, 10]                   --
+│    └─Dropout: 2-19                     [1, 2304]                 --
+│    └─Linear: 2-20                      [1, 1024]                 2,360,320
+│    └─ReLU: 2-21                        [1, 1024]                 --
+│    └─Dropout: 2-22                     [1, 1024]                 --
+│    └─Linear: 2-23                      [1, 1024]                 1,049,600
+│    └─ReLU: 2-24                        [1, 1024]                 --
+│    └─Linear: 2-25                      [1, 10]                   10,250
+==========================================================================================
+Total params: 6,611,402
+Trainable params: 6,611,402
+Non-trainable params: 0
+Total mult-adds (Units.MEGABYTES): 218.51
+==========================================================================================
+Input size (MB): 0.05
+Forward/backward pass size (MB): 2.56
+Params size (MB): 26.45
+Estimated Total Size (MB): 29.05
+==========================================================================================
+
+==============================================================================================
+ Epoch  | Train Loss  | Train Acc (%)  |  Val Loss  | Val Acc (%)  | Val F1 (%)  | Time (s)  | Throughput
+----------------------------------------------------------------------------------------------
+   1    |   1.6149    |     39.18      |   1.4406   |    48.28     |    47.69    |   23.32   |  2144.3  s/s
+[EarlyStopping] Best model checkpoint saved to: checkpoints/alexnet_bn_aug_es.pth
+   2    |   1.2257    |     55.99      |   1.3953   |    52.71     |    50.37    |   21.38   |  2339.1  s/s
+[EarlyStopping] val_loss improved from 1.4406 to 1.3953. Resetting patience counter.
+[EarlyStopping] Best model checkpoint saved to: checkpoints/alexnet_bn_aug_es.pth
+   3    |   1.0370    |     63.73      |   1.2511   |    57.60     |    58.06    |   20.97   |  2384.0  s/s
+[EarlyStopping] val_loss improved from 1.3953 to 1.2511. Resetting patience counter.
+[EarlyStopping] Best model checkpoint saved to: checkpoints/alexnet_bn_aug_es.pth
+   4    |   0.9179    |     68.30      |   0.9209   |    67.31     |    66.55    |   21.00   |  2380.7  s/s
+[EarlyStopping] val_loss improved from 1.2511 to 0.9209. Resetting patience counter.
+[EarlyStopping] Best model checkpoint saved to: checkpoints/alexnet_bn_aug_es.pth
+   5    |   0.8310    |     71.87      |   0.9221   |    68.83     |    69.09    |   21.02   |  2379.0  s/s
+[EarlyStopping] val_loss did not improve (0.9221 vs best 0.9209). Counter: 1/5
+   6    |   0.7583    |     74.61      |   0.7931   |    73.66     |    73.14    |   20.92   |  2390.1  s/s
+[EarlyStopping] val_loss improved from 0.9209 to 0.7931. Resetting patience counter.
+[EarlyStopping] Best model checkpoint saved to: checkpoints/alexnet_bn_aug_es.pth
+   7    |   0.7058    |     76.47      |   0.6975   |    76.63     |    76.63    |   21.08   |  2372.0  s/s
+[EarlyStopping] val_loss improved from 0.7931 to 0.6975. Resetting patience counter.
+[EarlyStopping] Best model checkpoint saved to: checkpoints/alexnet_bn_aug_es.pth
+   8    |   0.6658    |     77.79      |   0.6938   |    76.43     |    76.59    |   21.03   |  2377.1  s/s
+[EarlyStopping] val_loss improved from 0.6975 to 0.6938. Resetting patience counter.
+[EarlyStopping] Best model checkpoint saved to: checkpoints/alexnet_bn_aug_es.pth
+   9    |   0.6276    |     79.30      |   0.7129   |    75.86     |    76.04    |   20.95   |  2386.2  s/s
+[EarlyStopping] val_loss did not improve (0.7129 vs best 0.6938). Counter: 1/5
+  10    |   0.5995    |     80.24      |   0.5722   |    81.07     |    81.05    |   20.92   |  2390.5  s/s
+[EarlyStopping] val_loss improved from 0.6938 to 0.5722. Resetting patience counter.
+[EarlyStopping] Best model checkpoint saved to: checkpoints/alexnet_bn_aug_es.pth
+  11    |   0.5644    |     81.35      |   0.5811   |    80.65     |    80.36    |   21.09   |  2371.0  s/s
+[EarlyStopping] val_loss did not improve (0.5811 vs best 0.5722). Counter: 1/5
+  12    |   0.5395    |     82.02      |   0.5542   |    81.45     |    81.12    |   21.35   |  2342.1  s/s
+[EarlyStopping] val_loss improved from 0.5722 to 0.5542. Resetting patience counter.
+[EarlyStopping] Best model checkpoint saved to: checkpoints/alexnet_bn_aug_es.pth
+  13    |   0.5151    |     83.13      |   0.6950   |    77.99     |    78.00    |   21.01   |  2379.3  s/s
+[EarlyStopping] val_loss did not improve (0.6950 vs best 0.5542). Counter: 1/5
+  14    |   0.4963    |     83.66      |   0.5336   |    82.16     |    82.13    |   20.98   |  2382.8  s/s
+[EarlyStopping] val_loss improved from 0.5542 to 0.5336. Resetting patience counter.
+[EarlyStopping] Best model checkpoint saved to: checkpoints/alexnet_bn_aug_es.pth
+  15    |   0.4710    |     84.52      |   0.6165   |    79.01     |    78.83    |   21.00   |  2381.1  s/s
+[EarlyStopping] val_loss did not improve (0.6165 vs best 0.5336). Counter: 1/5
+  16    |   0.4532    |     85.11      |   0.6090   |    80.49     |    80.74    |   21.00   |  2381.5  s/s
+[EarlyStopping] val_loss did not improve (0.6090 vs best 0.5336). Counter: 2/5
+  17    |   0.4393    |     85.42      |   0.5711   |    81.41     |    81.31    |   21.03   |  2377.5  s/s
+[EarlyStopping] val_loss did not improve (0.5711 vs best 0.5336). Counter: 3/5
+  18    |   0.4242    |     86.10      |   0.5408   |    81.97     |    82.06    |   20.99   |  2382.3  s/s
+[EarlyStopping] val_loss did not improve (0.5408 vs best 0.5336). Counter: 4/5
+  19    |   0.4026    |     86.77      |   0.4726   |    84.24     |    84.17    |   21.06   |  2373.7  s/s
+[EarlyStopping] val_loss improved from 0.5336 to 0.4726. Resetting patience counter.
+[EarlyStopping] Best model checkpoint saved to: checkpoints/alexnet_bn_aug_es.pth
+  20    |   0.3945    |     86.95      |   0.5052   |    83.21     |    83.16    |   20.96   |  2386.0  s/s
+[EarlyStopping] val_loss did not improve (0.5052 vs best 0.4726). Counter: 1/5
+  21    |   0.3804    |     87.44      |   0.5100   |    83.18     |    83.05    |   20.92   |  2390.6  s/s
+[EarlyStopping] val_loss did not improve (0.5100 vs best 0.4726). Counter: 2/5
+  22    |   0.3654    |     87.91      |   0.4635   |    84.73     |    84.72    |   20.87   |  2396.0  s/s
+[EarlyStopping] val_loss improved from 0.4726 to 0.4635. Resetting patience counter.
+[EarlyStopping] Best model checkpoint saved to: checkpoints/alexnet_bn_aug_es.pth
+  23    |   0.3549    |     88.30      |   0.5141   |    83.50     |    83.19    |   20.89   |  2393.1  s/s
+[EarlyStopping] val_loss did not improve (0.5141 vs best 0.4635). Counter: 1/5
+  24    |   0.3525    |     88.22      |   0.5083   |    83.63     |    83.50    |   22.61   |  2211.1  s/s
+[EarlyStopping] val_loss did not improve (0.5083 vs best 0.4635). Counter: 2/5
+  25    |   0.3369    |     88.90      |   0.5250   |    82.90     |    82.73    |   21.54   |  2320.8  s/s
+[EarlyStopping] val_loss did not improve (0.5250 vs best 0.4635). Counter: 3/5
+  26    |   0.3298    |     89.19      |   0.4853   |    84.69     |    84.69    |   20.89   |  2394.0  s/s
+[EarlyStopping] val_loss did not improve (0.4853 vs best 0.4635). Counter: 4/5
+  27    |   0.3226    |     89.42      |   0.4605   |    84.95     |    84.91    |   20.92   |  2390.3  s/s
+[EarlyStopping] val_loss improved from 0.4635 to 0.4605. Resetting patience counter.
+[EarlyStopping] Best model checkpoint saved to: checkpoints/alexnet_bn_aug_es.pth
+  28    |   0.3060    |     89.95      |   0.4856   |    84.47     |    84.44    |   20.96   |  2385.7  s/s
+[EarlyStopping] val_loss did not improve (0.4856 vs best 0.4605). Counter: 1/5
+  29    |   0.2976    |     90.12      |   0.4456   |    85.46     |    85.49    |   20.91   |  2391.4  s/s
+[EarlyStopping] val_loss improved from 0.4605 to 0.4456. Resetting patience counter.
+[EarlyStopping] Best model checkpoint saved to: checkpoints/alexnet_bn_aug_es.pth
+  30    |   0.2938    |     90.18      |   0.4708   |    85.28     |    85.08    |   20.92   |  2389.5  s/s
+[EarlyStopping] val_loss did not improve (0.4708 vs best 0.4456). Counter: 1/5
+==============================================================================================
+Training completed in 635.43s.
+Best Val Accuracy: 85.46% | Best Val Macro F1: 85.49%
+Model Complexity : 6.611M Parameters | 437.97M FLOPs
+Best model weights saved to: checkpoints/alexnet_bn_aug_es.pth
+Training curves successfully saved to: plots/loss_alexnet_bn_aug_es.png

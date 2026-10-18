@@ -6,6 +6,10 @@
 #   ./run_postlab.sh cifar      # only the CIFAR-10 runs
 #   ./run_postlab.sh tiny       # only the Tiny ImageNet runs
 #   ./run_postlab.sh profile    # only the architecture checks + compare_models
+#   ./run_postlab.sh seeds      # extra seeds for the normalization study (Mean ± Std)
+#   ./run_postlab.sh extended   # extended ablation (lr, batch size, early stopping)
+#
+# Afterwards, python summarize_postlab.py prints the Mean ± Std and Δ tables.
 #
 # A run is skipped if its checkpoint already exists. Delete the .pth to rerun it.
 # All output is tee'd to logs/postlab/<name>.log.
@@ -29,7 +33,8 @@ run() {
         return
     fi
     echo ">>> Training ${name}"
-    python -u train.py "$@" --seed "$SEED" \
+    # --seed goes first so a run can override it (argparse keeps the last value)
+    python -u train.py --seed "$SEED" "$@" \
         --save-model "$ckpt" --plot-file "plots/loss_${name}.png" \
         2>&1 | tee "${LOG_DIR}/${name}.log"
 }
@@ -66,6 +71,25 @@ fi
 if [[ "$STAGE" == all || "$STAGE" == tiny ]]; then
     # Step 4 + Tiny ImageNet columns of Table 7.3b (downloads ~240MB on first run)
     run_dataset tiny_imagenet "tiny_"
+fi
+
+if [[ "$STAGE" == all || "$STAGE" == seeds ]]; then
+    # Multi-seed normalization study (Mean ± Std). Seed 42 is the alexnet_{none,lrn,bn} run above.
+    for s in 0 1; do
+        for n in none lrn bn; do
+            run "alexnet_${n}_s${s}" --model alexnet --norm "$n" --dataset cifar10 --epochs "$EPOCHS" --no-augment --seed "$s"
+        done
+    done
+fi
+
+if [[ "$STAGE" == all || "$STAGE" == extended ]]; then
+    # Extended ablation: each varies one setting from alexnet_bn (lr 1e-3, batch 128, 10 epochs, no aug)
+    run alexnet_bn_lr1e-2 --model alexnet --norm bn --dataset cifar10 --epochs "$EPOCHS" --no-augment --lr 1e-2
+    run alexnet_bn_lr1e-4 --model alexnet --norm bn --dataset cifar10 --epochs "$EPOCHS" --no-augment --lr 1e-4
+    run alexnet_bn_bs64   --model alexnet --norm bn --dataset cifar10 --epochs "$EPOCHS" --no-augment --batch-size 64
+    run alexnet_bn_bs256  --model alexnet --norm bn --dataset cifar10 --epochs "$EPOCHS" --no-augment --batch-size 256
+    # Longer schedule with augmentation, stopped when val loss stalls for 5 epochs
+    run alexnet_bn_aug_es --model alexnet --norm bn --dataset cifar10 --epochs 30 --early-stopping
 fi
 
 echo ">>> Done. Logs in ${LOG_DIR}/, checkpoints in checkpoints/, curves in plots/"
