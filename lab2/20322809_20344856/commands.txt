@@ -1,0 +1,62 @@
+ELEC 475 Lab 2 - commands to reproduce every model and result in the report
+Run from the lab2/ directory with the .venv active. Seed 42 unless stated.
+Datasets download automatically into data/ on first run.
+
+# ---------- Pre-lab ----------
+python -m utils.eda
+
+# ---------- In-lab: LeNet-5 and Modernized LeNet ----------
+python -m models.lenet
+python train.py --model lenet --dataset cifar10 --epochs 5 --batch-size 128 --seed 42 --save-model checkpoints/
+python -m models.lenet_modern
+python train.py --model lenet_modern --dataset cifar10 --epochs 5 --batch-size 128 --seed 42 --save-model checkpoints/
+
+# ---------- Post-lab: architecture checks and complexity benchmark ----------
+python -m models.alexnet
+python compare_models.py --dataset cifar10
+python compare_models.py --dataset tiny_imagenet
+python demo_transforms.py
+
+# ---------- Master ablation, CIFAR-10 (Tables 4 and 5, 10 epochs) ----------
+python train.py --seed 42 --model lenet        --dataset cifar10 --epochs 10 --no-augment --save-model checkpoints/lenet_baseline.pth --plot-file plots/loss_lenet_baseline.png
+python train.py --seed 42 --model lenet_modern --dataset cifar10 --epochs 10 --no-augment --save-model checkpoints/lenet_modern.pth   --plot-file plots/loss_lenet_modern.png
+python train.py --seed 42 --model alexnet --norm none --dataset cifar10 --epochs 10 --no-augment --save-model checkpoints/alexnet_none.pth --plot-file plots/loss_alexnet_none.png
+python train.py --seed 42 --model alexnet --norm lrn  --dataset cifar10 --epochs 10 --no-augment --save-model checkpoints/alexnet_lrn.pth  --plot-file plots/loss_alexnet_lrn.png
+python train.py --seed 42 --model alexnet --norm bn   --dataset cifar10 --epochs 10 --no-augment --save-model checkpoints/alexnet_bn.pth   --plot-file plots/loss_alexnet_bn.png
+python train.py --seed 42 --model alexnet --norm bn   --dataset cifar10 --epochs 10              --save-model checkpoints/alexnet_bn_aug.pth --plot-file plots/loss_alexnet_bn_aug.png
+python train.py --seed 42 --model zoo_alexnet  --dataset cifar10 --epochs 10 --no-augment --save-model checkpoints/zoo_alexnet.pth    --plot-file plots/loss_zoo_alexnet.png
+
+# ---------- Generalization gap, with vs without augmentation (Table 10, 15 epochs) ----------
+python train.py --seed 42 --model alexnet --norm bn --dataset cifar10 --epochs 15 --no-augment --save-model checkpoints/alexnet_no_aug.pth   --plot-file plots/loss_alexnet_no_aug.png
+python train.py --seed 42 --model alexnet --norm bn --dataset cifar10 --epochs 15              --save-model checkpoints/alexnet_with_aug.pth --plot-file plots/loss_alexnet_with_aug.png
+
+# ---------- Master ablation, Tiny ImageNet (Table 5, 10 epochs) ----------
+python train.py --seed 42 --model lenet        --dataset tiny_imagenet --epochs 10 --no-augment --save-model checkpoints/tiny_lenet_baseline.pth --plot-file plots/loss_tiny_lenet_baseline.png
+python train.py --seed 42 --model lenet_modern --dataset tiny_imagenet --epochs 10 --no-augment --save-model checkpoints/tiny_lenet_modern.pth   --plot-file plots/loss_tiny_lenet_modern.png
+python train.py --seed 42 --model alexnet --norm none --dataset tiny_imagenet --epochs 10 --no-augment --save-model checkpoints/tiny_alexnet_none.pth --plot-file plots/loss_tiny_alexnet_none.png
+python train.py --seed 42 --model alexnet --norm lrn  --dataset tiny_imagenet --epochs 10 --no-augment --save-model checkpoints/tiny_alexnet_lrn.pth  --plot-file plots/loss_tiny_alexnet_lrn.png
+python train.py --seed 42 --model alexnet --norm bn   --dataset tiny_imagenet --epochs 10 --no-augment --save-model checkpoints/tiny_alexnet_bn.pth   --plot-file plots/loss_tiny_alexnet_bn.png
+python train.py --seed 42 --model alexnet --norm bn   --dataset tiny_imagenet --epochs 10              --save-model checkpoints/tiny_alexnet_bn_aug.pth --plot-file plots/loss_tiny_alexnet_bn_aug.png
+python train.py --seed 42 --model zoo_alexnet  --dataset tiny_imagenet --epochs 10 --no-augment --save-model checkpoints/tiny_zoo_alexnet.pth    --plot-file plots/loss_tiny_zoo_alexnet.png
+
+# ---------- Multi-seed normalization study (Table 7; seed 42 runs are above) ----------
+python train.py --model alexnet --norm none --dataset cifar10 --epochs 10 --no-augment --seed 0 --save-model checkpoints/alexnet_none_s0.pth --plot-file plots/loss_alexnet_none_s0.png
+python train.py --model alexnet --norm lrn  --dataset cifar10 --epochs 10 --no-augment --seed 0 --save-model checkpoints/alexnet_lrn_s0.pth  --plot-file plots/loss_alexnet_lrn_s0.png
+python train.py --model alexnet --norm bn   --dataset cifar10 --epochs 10 --no-augment --seed 0 --save-model checkpoints/alexnet_bn_s0.pth   --plot-file plots/loss_alexnet_bn_s0.png
+python train.py --model alexnet --norm none --dataset cifar10 --epochs 10 --no-augment --seed 1 --save-model checkpoints/alexnet_none_s1.pth --plot-file plots/loss_alexnet_none_s1.png
+python train.py --model alexnet --norm lrn  --dataset cifar10 --epochs 10 --no-augment --seed 1 --save-model checkpoints/alexnet_lrn_s1.pth  --plot-file plots/loss_alexnet_lrn_s1.png
+python train.py --model alexnet --norm bn   --dataset cifar10 --epochs 10 --no-augment --seed 1 --save-model checkpoints/alexnet_bn_s1.pth   --plot-file plots/loss_alexnet_bn_s1.png
+
+# ---------- Extended ablation (Table 6; one change each from alexnet_bn) ----------
+python train.py --seed 42 --model alexnet --norm bn --dataset cifar10 --epochs 10 --no-augment --lr 1e-2       --save-model checkpoints/alexnet_bn_lr1e-2.pth --plot-file plots/loss_alexnet_bn_lr1e-2.png
+python train.py --seed 42 --model alexnet --norm bn --dataset cifar10 --epochs 10 --no-augment --lr 1e-4       --save-model checkpoints/alexnet_bn_lr1e-4.pth --plot-file plots/loss_alexnet_bn_lr1e-4.png
+python train.py --seed 42 --model alexnet --norm bn --dataset cifar10 --epochs 10 --no-augment --batch-size 64  --save-model checkpoints/alexnet_bn_bs64.pth   --plot-file plots/loss_alexnet_bn_bs64.png
+python train.py --seed 42 --model alexnet --norm bn --dataset cifar10 --epochs 10 --no-augment --batch-size 256 --save-model checkpoints/alexnet_bn_bs256.pth  --plot-file plots/loss_alexnet_bn_bs256.png
+python train.py --seed 42 --model alexnet --norm bn --dataset cifar10 --epochs 30 --early-stopping             --save-model checkpoints/alexnet_bn_aug_es.pth --plot-file plots/loss_alexnet_bn_aug_es.png
+
+# ---------- Summary tables and ablation plots ----------
+python summarize_postlab.py
+python plot_ablation.py                          # plots/ablation_summary.png
+python plot_ablation.py --dataset tiny_imagenet  # plots/ablation_summary_tiny_imagenet.png
+
+# All of the post-lab runs above can also be run in one go with:  ./run_postlab.sh
