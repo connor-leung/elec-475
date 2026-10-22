@@ -9,8 +9,7 @@ __pycache__/
 .pytest_cache/
 
 # Datasets (auto-downloaded by the lab scripts; never commit)
-lab1/data/*
-lab2/data/*
+**/data/
 
 # Model checkpoints (too large for GitHub); keep only the ones the Lab 2 submission requires
 *.pth
