@@ -22,7 +22,7 @@ def ensemble_mean(preds: List[torch.Tensor]) -> torch.Tensor:
     # Requirements:
     #   1. For each image, average the three models' predicted (u, v)
     # ======================================================================
-    pass
+    return torch.stack(preds, dim=0).mean(dim=0)      # (3, N, 2) -> (N, 2)
 
 
 def ensemble_median(preds: List[torch.Tensor]) -> torch.Tensor:
@@ -43,4 +43,5 @@ def ensemble_median(preds: List[torch.Tensor]) -> torch.Tensor:
     #   1. For each image, take the median of the three models' predictions,
     #      separately for u and for v
     # ======================================================================
-    pass
+    # With 3 models the median is exactly the middle value of each coordinate
+    return torch.stack(preds, dim=0).median(dim=0).values

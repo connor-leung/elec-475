@@ -45,7 +45,9 @@ def extract_patch(img: Image.Image, center) -> Image.Image:
     #      (img.crop() fills any part of the region outside the image with black)
     #   2. Resize the region to (INPUT_SIZE, INPUT_SIZE) with Image.BILINEAR
     # ======================================================================
-    pass
+    cu, cv = center
+    box = (cu - HALF_PATCH, cv - HALF_PATCH, cu + HALF_PATCH, cv + HALF_PATCH)
+    return img.crop(box).resize((INPUT_SIZE, INPUT_SIZE), Image.BILINEAR)
 
 
 class CorrectionDataset(PetNoseDataset):
@@ -82,7 +84,27 @@ class CorrectionDataset(PetNoseDataset):
         #   5. Return TF.normalize(TF.to_tensor(patch), MEAN, STD) and the
         #      normalized target (du, dv) / HALF_PATCH
         # ======================================================================
-        pass
+        name, u, v = self.samples[idx]
+        img = Image.open(self.img_dir / name).convert("RGB")
+
+        # Simulated first prediction: a random point up to MAX_OFFSET px from the nose
+        cu = round(u + random.uniform(-MAX_OFFSET, MAX_OFFSET))
+        cv = round(v + random.uniform(-MAX_OFFSET, MAX_OFFSET))
+        patch = extract_patch(img, (cu, cv))
+        du, dv = u - cu, v - cv
+
+        if self.augment:
+            # A horizontal flip mirrors the patch about its centre column, so the
+            # horizontal offset changes sign; the vertical offset is unchanged
+            if random.random() < 0.5:
+                patch = patch.transpose(Image.FLIP_LEFT_RIGHT)
+                du = -du
+            # Colour jitter changes pixel values only, not geometry: target unchanged
+            patch = self.color_jitter(patch)
+
+        patch = TF.normalize(TF.to_tensor(patch), MEAN, STD)
+        target = torch.tensor([du, dv], dtype=torch.float32) / HALF_PATCH
+        return patch, target
 
 
 if __name__ == "__main__":

@@ -2,12 +2,13 @@
 ELEC 475: Lab 3 - Inference Timing Utility
 Provides:
   1. benchmark_inference: Average inference time per image (ms) at batch size 1,
-     with warm-up runs and CUDA synchronization.
+     with warm-up runs and CUDA/MPS synchronization.
 """
 import time
 from typing import List
 import torch
 import torch.nn as nn
+from utils.device import synchronize
 
 
 def benchmark_inference(model: nn.Module, inputs: List[torch.Tensor], device: torch.device,
@@ -21,13 +22,11 @@ def benchmark_inference(model: nn.Module, inputs: List[torch.Tensor], device: to
     with torch.no_grad():
         for x in inputs[:warmup]:
             model(x.unsqueeze(0).to(device))
-        if device.type == "cuda":
-            torch.cuda.synchronize()
+        synchronize(device)
 
         start = time.perf_counter()
         for x in inputs:
             model(x.unsqueeze(0).to(device))
-        if device.type == "cuda":
-            torch.cuda.synchronize()
+        synchronize(device)
 
     return (time.perf_counter() - start) * 1000.0 / len(inputs)

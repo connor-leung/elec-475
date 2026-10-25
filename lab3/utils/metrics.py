@@ -33,7 +33,7 @@ def euclidean_errors(pred: torch.Tensor, gt: torch.Tensor) -> torch.Tensor:
     #   1. For each image, compute the distance between the predicted (u, v)
     #      and the ground-truth (u, v)
     # ======================================================================
-    pass
+    return torch.linalg.norm(pred - gt, dim=1)
 
 
 def error_stats(errors: torch.Tensor) -> Dict[str, float]:
@@ -54,7 +54,13 @@ def error_stats(errors: torch.Tensor) -> Dict[str, float]:
     #   1. Compute each statistic with errors.min(), .mean(), .median(), .max() and .std()
     #   2. Convert each result to a Python float with .item()
     # ======================================================================
-    pass
+    return {
+        "min": errors.min().item(),
+        "mean": errors.mean().item(),
+        "median": errors.median().item(),
+        "max": errors.max().item(),
+        "std": errors.std().item(),
+    }
 
 
 def baseline_predictions(orig_size: torch.Tensor, train_file: str, img_dir: str) -> torch.Tensor:
@@ -84,7 +90,20 @@ def baseline_predictions(orig_size: torch.Tensor, train_file: str, img_dir: str)
     #      each test image: (u_avg * W, v_avg * H), using that test image's (W, H)
     #      from orig_size. This is the baseline's prediction for that image
     # ======================================================================
-    pass
+    normalized = []
+    with open(train_file, "r") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            # e.g. beagle_145.jpg,"(198, 304)"
+            name, coords = line.split(",", 1)
+            u_str, v_str = coords.strip().strip('"').strip("()").split(",")
+            w, h = Image.open(os.path.join(img_dir, name.strip())).size
+            normalized.append((float(u_str) / w, float(v_str) / h))
+
+    mean_uv = torch.tensor(normalized, dtype=torch.float32).mean(dim=0)  # (u_avg, v_avg)
+    return mean_uv * orig_size.float()                                  # (N, 2) via broadcasting
 
 
 def ced_curve(errors: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
@@ -105,7 +124,10 @@ def ced_curve(errors: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
     #
     # Hint: use torch.sort
     # ======================================================================
-    pass
+    x, _ = torch.sort(errors)
+    n = errors.numel()
+    y = 100.0 * torch.arange(1, n + 1, dtype=torch.float32) / n
+    return x, y
 
 
 def best_worst_indices(errors: torch.Tensor, k: int = 4) -> Tuple[torch.Tensor, torch.Tensor]:
@@ -127,7 +149,10 @@ def best_worst_indices(errors: torch.Tensor, k: int = 4) -> Tuple[torch.Tensor, 
     #
     # Hint: use torch.argsort
     # ======================================================================
-    pass
+    order = torch.argsort(errors)          # smallest error first
+    best = order[:k]
+    worst = order.flip(0)[:k]              # largest error first
+    return best, worst
 
 
 def print_results(rows: Dict[str, Dict]):

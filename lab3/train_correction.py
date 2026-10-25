@@ -22,6 +22,7 @@ from torchinfo import summary
 from models.correction import CorrectionNet, CorrectionNetModified
 from utils.correction_dataset import CorrectionDataset, HALF_PATCH
 from utils.visualization import plot_training_loss
+from utils.device import get_device, device_name
 
 
 def seed_everything(seed: int):
@@ -66,7 +67,7 @@ def main():
     parser.add_argument("--batch-size", type=int, default=64, help="Batch size")
     parser.add_argument("--lr", type=float, default=1e-3, help="Learning rate")
     parser.add_argument("--seed", type=int, default=42, help="Random seed for reproducibility")
-    parser.add_argument("--num-workers", type=int, default=2, help="DataLoader worker processes")
+    parser.add_argument("--num-workers", type=int, default=4, help="DataLoader worker processes")
     parser.add_argument("--no-augment", action="store_true", help="Disable flip and colour jitter augmentation")
     parser.add_argument("--modified", action="store_true", help="Train CorrectionNetModified (Step 5)")
     parser.add_argument("--save-model", type=str, required=True, help="Path to save the model weights (.pth)")
@@ -74,10 +75,10 @@ def main():
     args = parser.parse_args()
 
     seed_everything(args.seed)
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = get_device()
     print("=" * 72)
     print("ELEC 475: Lab 3 Correction Model Training Engine")
-    print(f"Device        : {device} ({torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'CPU'})")
+    print(f"Device        : {device} ({device_name(device)})")
     print(f"Model         : {'CorrectionNetModified' if args.modified else 'CorrectionNet'}")
     print(f"Augmentation  : {not args.no_augment}")
     print(f"Hyperparams   : Epochs={args.epochs}, BatchSize={args.batch_size}, LR={args.lr}, Seed={args.seed}")

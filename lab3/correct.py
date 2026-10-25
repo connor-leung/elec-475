@@ -15,6 +15,7 @@ from utils.dataset import MEAN, STD
 from utils.correction_dataset import extract_patch, HALF_PATCH
 from utils.profiler import benchmark_inference
 from utils.ensemble import ensemble_mean
+from utils.device import get_device
 
 FIRST_STAGE = ["snoutnet", "vgg16", "ensemble_mean"]
 TIMING_IMAGES = 50
@@ -35,7 +36,7 @@ def load_first_stage(pred_dir: str, key: str) -> dict:
 
 def correct_predictions(checkpoint_path: str, data_dir: str = "data/oxford-iiit-pet-noses",
                         pred_dir: str = "predictions", modified: bool = False):
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = get_device()
     img_dir = os.path.join(data_dir, "images-original", "images")
     tag = os.path.splitext(os.path.basename(checkpoint_path))[0]          # e.g. correction_aug
     print("=" * 72)

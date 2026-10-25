@@ -17,6 +17,7 @@ from torch.utils.data import DataLoader
 from models import get_model
 from utils.dataset import PetNoseDataset, IMG_SIZE
 from utils.profiler import benchmark_inference
+from utils.device import get_device, device_name
 
 MODEL_KEYS = ["snoutnet", "alexnet", "vgg16"]
 TIMING_IMAGES = 50
@@ -62,7 +63,7 @@ def predict_model(model_key: str, dataset: PetNoseDataset, names, file_coords: t
     print(f"[{model_key}] Loaded {checkpoint_path} ({params:,} params)")
 
     # 2. Prediction Loop (outputs are normalized: (u/227, v/227))
-    loader = DataLoader(dataset, batch_size=32, shuffle=False, num_workers=0)
+    loader = DataLoader(dataset, batch_size=32, shuffle=False, num_workers=4)
     preds, gts, sizes, timing_inputs = [], [], [], []
     with torch.no_grad():
         for imgs, labels, orig_size in loader:
@@ -102,11 +103,11 @@ def main():
                         help="Directory to save the predictions files")
     args = parser.parse_args()
 
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = get_device()
     model_keys = MODEL_KEYS if args.model == "all" else [args.model]
     print("=" * 72)
     print("ELEC 475: Lab 3 Test-Set Prediction")
-    print(f"Device        : {device} ({torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'CPU'})")
+    print(f"Device        : {device} ({device_name(device)})")
     print(f"Models        : {', '.join(k.upper() for k in model_keys)}")
     print("=" * 72 + "\n")
 
