@@ -13,6 +13,7 @@ import argparse
 import numpy as np
 import torch
 import torch.nn.functional as F
+from torch.utils.data import DataLoader, Subset
 from torchvision.datasets import VOCSegmentation
 from torchvision.models.segmentation import fcn_resnet50, FCN_ResNet50_Weights
 from tqdm import tqdm
@@ -24,10 +25,29 @@ VOC_CLASSES = ["background", "aeroplane", "bicycle", "bird", "boat", "bottle", "
                "sheep", "sofa", "train", "tvmonitor"]
 
 
-def load_dataset(data_dir: str, image_set: str) -> VOCSegmentation:
+def get_device() -> torch.device:
+    # MPS is the Apple Silicon GPU backend (e.g. M4)
+    if torch.cuda.is_available():
+        return torch.device("cuda")
+    if torch.backends.mps.is_available():
+        return torch.device("mps")
+    return torch.device("cpu")
+
+
+def mask_to_tensor(mask) -> torch.Tensor:
+    return torch.as_tensor(np.array(mask), dtype=torch.int64)  # palette indices: 0-20, 255
+
+
+def unbatch(batch):
+    # Module-level (not a lambda) so macOS's spawned workers can pickle it
+    return batch[0]
+
+
+def load_dataset(data_dir: str, image_set: str, preprocess=None) -> VOCSegmentation:
     # download=True re-extracts the whole archive on every run, so only use it when the data is missing
     download = not os.path.isdir(os.path.join(data_dir, "VOCdevkit", "VOC2012"))
-    return VOCSegmentation(root=data_dir, year="2012", image_set=image_set, download=download)
+    return VOCSegmentation(root=data_dir, year="2012", image_set=image_set, download=download,
+                           transform=preprocess, target_transform=mask_to_tensor)
 
 
 def update_confusion(confusion: torch.Tensor, pred: torch.Tensor, target: torch.Tensor) -> None:
@@ -58,16 +78,16 @@ def iou_from_confusion(confusion: torch.Tensor) -> torch.Tensor:
 
 
 @torch.inference_mode()
-def evaluate(model, preprocess, dataset, device, limit=None) -> torch.Tensor:
+def evaluate(model, dataset, device, limit=None, num_workers=4) -> torch.Tensor:
     confusion = torch.zeros(NUM_CLASSES, NUM_CLASSES, dtype=torch.int64)
-    n_images = len(dataset) if limit is None else min(limit, len(dataset))
+    if limit is not None:
+        dataset = Subset(dataset, range(min(limit, len(dataset))))
 
-    # Batch size 1: VOC images vary in size
-    for i in tqdm(range(n_images), desc="Evaluating"):
-        image, mask = dataset[i]
-        target = torch.as_tensor(np.array(mask), dtype=torch.int64)  # palette indices: 0-20, 255
-
-        logits = model(preprocess(image).unsqueeze(0).to(device))["out"]
+    # Batch size 1: VOC images vary in size. Workers decode and preprocess images in parallel with the GPU
+    loader = DataLoader(dataset, batch_size=1, shuffle=False, num_workers=num_workers,
+                        collate_fn=unbatch)
+    for image, target in tqdm(loader, desc="Evaluating"):
+        logits = model(image.unsqueeze(0).to(device))["out"]
         # Score at the mask's original resolution, so the labels are never resampled
         logits = F.interpolate(logits, size=target.shape, mode="bilinear", align_corners=False)
         update_confusion(confusion, logits.argmax(dim=1)[0].cpu(), target)
@@ -92,10 +112,11 @@ def main():
     parser.add_argument("--data_dir", type=str, default="data")
     parser.add_argument("--image_set", type=str, default="val", choices=["train", "val", "trainval"])
     parser.add_argument("--limit", type=int, default=None, help="Only evaluate the first N images")
+    parser.add_argument("--num_workers", type=int, default=4, help="DataLoader worker processes")
     parser.add_argument("--output", type=str, default="results/baseline_fcn_resnet50.json")
     args = parser.parse_args()
 
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = get_device()
     weights = FCN_ResNet50_Weights.DEFAULT
 
     print("=" * 72)
@@ -109,11 +130,11 @@ def main():
     preprocess = weights.transforms()
 
     # 2. Load the Dataset
-    dataset = load_dataset(args.data_dir, args.image_set)
+    dataset = load_dataset(args.data_dir, args.image_set, preprocess)
     print(f"VOC 2012 {args.image_set}: {len(dataset)} images")
 
     # 3. Evaluate
-    confusion = evaluate(model, preprocess, dataset, device, args.limit)
+    confusion = evaluate(model, dataset, device, args.limit, args.num_workers)
     iou = iou_from_confusion(confusion)
     print_results(iou, confusion)
 
