@@ -1,0 +1,10 @@
+Training student with kd=feature on cpu for 20 iterations
+iter   5/20  loss 3.743
+iter  10/20  loss 3.067
+iter  15/20  loss 2.819
+iter  20/20  loss 2.591
+Kick-start finished: average loss 4.283 (first 5) -> 2.722 (last 5)
+Saved plots/loss_feature.png
+real 189.16
+user 743.41
+sys 215.27

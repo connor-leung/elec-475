@@ -1,0 +1,10 @@
+Training student with kd=response on cpu for 20 iterations
+iter   5/20  loss 2.500
+iter  10/20  loss 2.442
+iter  15/20  loss 2.341
+iter  20/20  loss 2.152
+Kick-start finished: average loss 2.727 (first 5) -> 2.152 (last 5)
+Saved plots/loss_response.png
+real 179.80
+user 705.93
+sys 208.34

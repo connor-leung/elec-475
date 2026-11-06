@@ -1,0 +1,20 @@
+Question 1:
+the first term compares the student to the dataset's hand-labelled masks, and the second compares it to 
+the teacher's probabilities over the same 21 VOC classes. 
+
+τ > 1 softens the teacher's overconfident output so the student can see how similar each wrong class is to the right one
+its spread out more evenly. 
+
+Question 2:
+We need adapters because the student's features have far fewer channels than the teachers, so a 1x1 conv maps them to the same size 
+before the cosine loss can compare them. Convolution is the fix, due to the difference in channels the cosine loss can't compare 
+vectors of differnet lengths
+
+The adapter fixes the difference in the number of channels between the student's and teacher's features, so the training loss can compare them. 
+When the student makes a prediction, it doesn't need the adapter, so it isn't counted in the student's parameters.
+
+Question 3:
+The cosine loss checks whether the two vectors point in the same direction for each pixel
+for identical features the angle is 0 and cos = 1, so the loss is 0
+
+for opposite features the angle is 180 degress so cos is -1 and 1 - (-1) = 2

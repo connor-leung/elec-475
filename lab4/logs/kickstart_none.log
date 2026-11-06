@@ -1,0 +1,10 @@
+Training student with kd=none on cpu for 20 iterations
+iter   5/20  loss 2.052
+iter  10/20  loss 1.916
+iter  15/20  loss 1.379
+iter  20/20  loss 1.591
+Kick-start finished: average loss 2.542 (first 5) -> 1.462 (last 5)
+Saved plots/loss_none.png
+real 64.08
+user 80.15
+sys 141.73
