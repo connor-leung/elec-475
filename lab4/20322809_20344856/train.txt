@@ -1,0 +1,10 @@
+# Provided student (Step 1)
+python train.py --kd none -e 100 --augment
+python train.py --kd response -e 100 --augment
+python train.py --kd feature -e 100 --augment
+
+# Custom student, CompactSegNet (Step 3)
+python train.py --model custom --kd none -e 100 --augment
+python train.py --model custom --kd response -e 100 --augment
+python train.py --model custom --kd feature -e 100 --augment
+python train.py --model custom --kd both -e 100 --augment
