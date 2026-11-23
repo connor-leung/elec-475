@@ -1,0 +1,6 @@
+=== 17:42:10 python train.py --kd response -e 100 --augment -> logs/train_student_response.log
+Training student (3,265,173 parameters) with kd=response on Apple M4 Pro GPU (MPS) for up to 100 epochs
+{'model': 'student', 'kd': 'response', 'data': './data', 'epochs': 100, 'batch': 16, 'lr': 0.001, 'size': 320, 'alpha': 0.5, 'beta': 0.5, 'tau': 4.0, 'gamma': 1.0, 'lr_patience': 2, 'lr_factor': 0.5, 'patience': 5, 'tol': 0.1, 'augment': True, 'workers': 4, 'iters': 0}
+epoch 1/100  loss 1.969  val mIoU 13.8 *  lr 1.00e-03  (57 s)
+/Users/connorleung/.pyenv/versions/3.12.0/lib/python3.12/multiprocessing/resource_tracker.py:224: UserWarning: resource_tracker: There appear to be 40 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '

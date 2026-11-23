@@ -24,6 +24,8 @@ class ASPP(nn.Module):
 
 
 class StudentNet(nn.Module):
+    feat_channels = {'low': 24, 'mid': 40, 'high': 576}
+
     def __init__(self, num_classes=21, pretrained=True):
         super().__init__()
         weights = MobileNet_V3_Small_Weights.DEFAULT if pretrained else None

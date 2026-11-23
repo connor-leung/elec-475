@@ -1,0 +1,35 @@
+Training custom (1,294,533 parameters) with kd=none on Apple M4 Pro GPU (MPS) for up to 100 epochs
+{'model': 'custom', 'kd': 'none', 'data': './data', 'epochs': 100, 'batch': 16, 'lr': 0.001, 'size': 320, 'alpha': 0.5, 'beta': 0.5, 'tau': 4.0, 'gamma': 1.0, 'lr_patience': 2, 'lr_factor': 0.5, 'patience': 5, 'tol': 0.1, 'augment': True, 'workers': 4, 'iters': 0}
+epoch 1/100  loss 1.499  val mIoU 10.0 *  lr 1.00e-03  (25 s)
+epoch 2/100  loss 0.903  val mIoU 15.7 *  lr 1.00e-03  (39 s)
+epoch 3/100  loss 0.767  val mIoU 24.4 *  lr 1.00e-03  (54 s)
+epoch 4/100  loss 0.710  val mIoU 28.3 *  lr 1.00e-03  (69 s)
+epoch 5/100  loss 0.639  val mIoU 28.8 *  lr 1.00e-03  (84 s)
+epoch 6/100  loss 0.556  val mIoU 33.1 *  lr 1.00e-03  (99 s)
+epoch 7/100  loss 0.527  val mIoU 32.3  lr 1.00e-03  (113 s)
+epoch 8/100  loss 0.514  val mIoU 34.3 *  lr 1.00e-03  (128 s)
+epoch 9/100  loss 0.439  val mIoU 34.3  lr 1.00e-03  (143 s)
+epoch 10/100  loss 0.427  val mIoU 37.9 *  lr 1.00e-03  (158 s)
+epoch 11/100  loss 0.431  val mIoU 38.4 *  lr 1.00e-03  (173 s)
+epoch 12/100  loss 0.414  val mIoU 37.5  lr 1.00e-03  (188 s)
+epoch 13/100  loss 0.419  val mIoU 36.1  lr 1.00e-03  (202 s)
+epoch 14/100  loss 0.380  val mIoU 37.8  lr 1.00e-03  (217 s)
+epoch 15/100  loss 0.324  val mIoU 45.7 *  lr 5.00e-04  (232 s)
+epoch 16/100  loss 0.285  val mIoU 46.7 *  lr 5.00e-04  (247 s)
+epoch 17/100  loss 0.257  val mIoU 47.8 *  lr 5.00e-04  (262 s)
+epoch 18/100  loss 0.250  val mIoU 45.8  lr 5.00e-04  (277 s)
+epoch 19/100  loss 0.245  val mIoU 48.0 *  lr 5.00e-04  (292 s)
+epoch 20/100  loss 0.237  val mIoU 47.6  lr 5.00e-04  (306 s)
+epoch 21/100  loss 0.225  val mIoU 47.9  lr 5.00e-04  (321 s)
+epoch 22/100  loss 0.225  val mIoU 47.7  lr 5.00e-04  (336 s)
+epoch 23/100  loss 0.210  val mIoU 50.7 *  lr 2.50e-04  (351 s)
+epoch 24/100  loss 0.201  val mIoU 51.6 *  lr 2.50e-04  (366 s)
+epoch 25/100  loss 0.187  val mIoU 51.1  lr 2.50e-04  (380 s)
+epoch 26/100  loss 0.191  val mIoU 51.0  lr 2.50e-04  (395 s)
+epoch 27/100  loss 0.180  val mIoU 50.5  lr 2.50e-04  (410 s)
+epoch 28/100  loss 0.173  val mIoU 51.6  lr 1.25e-04  (425 s)
+epoch 29/100  loss 0.169  val mIoU 51.6  lr 1.25e-04  (439 s)
+Early stopping: no improvement of more than 0.1 mIoU for 5 epochs
+Finished after 29 epochs in 439 s: best val mIoU 51.6 at epoch 24
+Saved checkpoints/custom_none.pth
+Saved plots/loss_custom_none.png
