@@ -1,0 +1,55 @@
+{
+ "cfg": {
+  "BACKBONE": "facebook/dinov3-vits16-pretrain-lvd1689m",
+  "TRAIN_BLOCKS": 12,
+  "HIDDEN_DIM": 1024,
+  "AUG": "strong",
+  "EPOCHS": null,
+  "BATCH_SIZE": 128,
+  "LR_HEAD": 0.001,
+  "LR_BACKBONE": 2e-05,
+  "WEIGHT_DECAY": 0.05,
+  "WARMUP_STEPS": 100,
+  "TEMP_INIT": 0.07,
+  "LOSS": "infonce_cls",
+  "CLS_WEIGHT": 0.5,
+  "SEED": 0,
+  "RUN_TAG": "aug_clsloss",
+  "QUICK_RUN": false,
+  "SAVE_TO_DRIVE": false,
+  "DRIVE_DIR": "/content/drive/MyDrive/sketch_lab",
+  "LOCAL_ZIP": "",
+  "DATA_DIR": "data",
+  "CACHE_DIR": "data/cache",
+  "RUNS_DIR": "runs",
+  "NUM_WORKERS": 0,
+  "STUDENT_ZIP_ID": "1VzzfJdszuVJTyxpefE93C9sP8soIe-q1",
+  "QUICK_CLASSES": 20
+ },
+ "hardware": "Apple M4 Pro GPU (MPS)",
+ "train_minutes": 52.11789741516113,
+ "epochs": 20,
+ "test": {
+  "s2p_cat": {
+   "1": 88.89772295951843,
+   "5": 96.43614292144775,
+   "10": 97.99947142601013
+  },
+  "s2p_inst": {
+   "1": 34.48595702648163,
+   "5": 75.78166127204895,
+   "10": 89.86486196517944
+  },
+  "p2s_cat": {
+   "1": 92.5599992275238,
+   "5": 97.60000109672546,
+   "10": 98.47999811172485
+  },
+  "p2s_inst": {
+   "1": 50.40000081062317,
+   "5": 86.40000224113464,
+   "10": 94.40000057220459
+  }
+ },
+ "class_acc": 87.69210577011108
+}

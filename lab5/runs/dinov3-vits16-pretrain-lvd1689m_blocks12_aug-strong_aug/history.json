@@ -1,0 +1,212 @@
+{
+ "cfg": {
+  "BACKBONE": "facebook/dinov3-vits16-pretrain-lvd1689m",
+  "TRAIN_BLOCKS": 12,
+  "HIDDEN_DIM": 1024,
+  "AUG": "strong",
+  "EPOCHS": null,
+  "BATCH_SIZE": 128,
+  "LR_HEAD": 0.001,
+  "LR_BACKBONE": 2e-05,
+  "WEIGHT_DECAY": 0.05,
+  "WARMUP_STEPS": 100,
+  "TEMP_INIT": 0.07,
+  "LOSS": "infonce",
+  "CLS_WEIGHT": 0.5,
+  "SEED": 0,
+  "RUN_TAG": "aug",
+  "QUICK_RUN": false,
+  "SAVE_TO_DRIVE": false,
+  "DRIVE_DIR": "/content/drive/MyDrive/sketch_lab",
+  "LOCAL_ZIP": "",
+  "DATA_DIR": "data",
+  "CACHE_DIR": "data/cache",
+  "RUNS_DIR": "runs",
+  "NUM_WORKERS": 0,
+  "STUDENT_ZIP_ID": "1VzzfJdszuVJTyxpefE93C9sP8soIe-q1",
+  "QUICK_CLASSES": 20
+ },
+ "hardware": "Apple M4 Pro GPU (MPS)",
+ "history": [
+  {
+   "epoch": 1,
+   "train_loss": 2.8125883283385313,
+   "val_loss": 2.1633989799499513,
+   "val_cat_r1": 72.91013598442078,
+   "val_inst_r1": 35.188087821006775,
+   "temperature": 0.06724554568226067,
+   "seconds": 147.7938289642334
+  },
+  {
+   "epoch": 2,
+   "train_loss": 1.4315145748207367,
+   "val_loss": 1.8806154243469237,
+   "val_cat_r1": 79.07523512840271,
+   "val_inst_r1": 40.85684418678284,
+   "temperature": 0.06186681091179465,
+   "seconds": 155.91112184524536
+  },
+  {
+   "epoch": 3,
+   "train_loss": 1.1435413892010609,
+   "val_loss": 1.7382941276550292,
+   "val_cat_r1": 82.10553526878357,
+   "val_inst_r1": 42.29362607002258,
+   "temperature": 0.05754172776202225,
+   "seconds": 152.41690802574158
+  },
+  {
+   "epoch": 4,
+   "train_loss": 0.9877720891711224,
+   "val_loss": 1.6528001232147216,
+   "val_cat_r1": 82.99372792243958,
+   "val_inst_r1": 43.39080452919006,
+   "temperature": 0.05397959600758059,
+   "seconds": 147.22697114944458
+  },
+  {
+   "epoch": 5,
+   "train_loss": 0.8718638570911913,
+   "val_loss": 1.5875194580078125,
+   "val_cat_r1": 83.28108787536621,
+   "val_inst_r1": 44.87983286380768,
+   "temperature": 0.05100474745116351,
+   "seconds": 145.438560962677
+  },
+  {
+   "epoch": 6,
+   "train_loss": 0.7913317450557846,
+   "val_loss": 1.5230267517089844,
+   "val_cat_r1": 85.16196608543396,
+   "val_inst_r1": 45.87251842021942,
+   "temperature": 0.04850006665095906,
+   "seconds": 146.12324285507202
+  },
+  {
+   "epoch": 7,
+   "train_loss": 0.7139851853071925,
+   "val_loss": 1.4744282871246337,
+   "val_cat_r1": 85.89341640472412,
+   "val_inst_r1": 46.94357514381409,
+   "temperature": 0.04639458975200316,
+   "seconds": 147.522203207016
+  },
+  {
+   "epoch": 8,
+   "train_loss": 0.6615227044346821,
+   "val_loss": 1.4449597736358644,
+   "val_cat_r1": 86.23301982879639,
+   "val_inst_r1": 47.9885071516037,
+   "temperature": 0.04463024489736852,
+   "seconds": 152.36473298072815
+  },
+  {
+   "epoch": 9,
+   "train_loss": 0.610578701438674,
+   "val_loss": 1.42619073677063,
+   "val_cat_r1": 86.38976216316223,
+   "val_inst_r1": 47.49216437339783,
+   "temperature": 0.04314455014173099,
+   "seconds": 159.1565990447998
+  },
+  {
+   "epoch": 10,
+   "train_loss": 0.5436232445469822,
+   "val_loss": 1.4100486400604249,
+   "val_cat_r1": 86.80773377418518,
+   "val_inst_r1": 48.24973940849304,
+   "temperature": 0.04192647065879564,
+   "seconds": 157.2954080104828
+  },
+  {
+   "epoch": 11,
+   "train_loss": 0.4934202773743365,
+   "val_loss": 1.3910515117645263,
+   "val_cat_r1": 87.64367699623108,
+   "val_inst_r1": 49.39916431903839,
+   "temperature": 0.04092124949491189,
+   "seconds": 156.44547367095947
+  },
+  {
+   "epoch": 12,
+   "train_loss": 0.4702807420707611,
+   "val_loss": 1.366718533706665,
+   "val_cat_r1": 87.95715570449829,
+   "val_inst_r1": 50.626957416534424,
+   "temperature": 0.04012027327712081,
+   "seconds": 161.12677192687988
+  },
+  {
+   "epoch": 13,
+   "train_loss": 0.45381456254476527,
+   "val_loss": 1.3599299465179444,
+   "val_cat_r1": 88.37513327598572,
+   "val_inst_r1": 50.078368186950684,
+   "temperature": 0.039498473175417693,
+   "seconds": 161.20746278762817
+  },
+  {
+   "epoch": 14,
+   "train_loss": 0.4143067763512393,
+   "val_loss": 1.3570570991516113,
+   "val_cat_r1": 88.55799436569214,
+   "val_inst_r1": 50.208985805511475,
+   "temperature": 0.03901290260555304,
+   "seconds": 161.9838411808014
+  },
+  {
+   "epoch": 15,
+   "train_loss": 0.40836504676255836,
+   "val_loss": 1.341632456970215,
+   "val_cat_r1": 88.68861198425293,
+   "val_inst_r1": 50.80982446670532,
+   "temperature": 0.03866589505188377,
+   "seconds": 158.10209035873413
+  },
+  {
+   "epoch": 16,
+   "train_loss": 0.3919181960174836,
+   "val_loss": 1.3414530269622802,
+   "val_cat_r1": 88.8453483581543,
+   "val_inst_r1": 51.306164264678955,
+   "temperature": 0.03842342928637345,
+   "seconds": 154.5268189907074
+  },
+  {
+   "epoch": 17,
+   "train_loss": 0.3790431349392397,
+   "val_loss": 1.3350706077575683,
+   "val_cat_r1": 88.81922960281372,
+   "val_inst_r1": 51.306164264678955,
+   "temperature": 0.03827383184576877,
+   "seconds": 162.2583248615265
+  },
+  {
+   "epoch": 18,
+   "train_loss": 0.3659966322312872,
+   "val_loss": 1.3302067794799806,
+   "val_cat_r1": 88.74085545539856,
+   "val_inst_r1": 51.489025354385376,
+   "temperature": 0.038193779698656345,
+   "seconds": 163.6302411556244
+  },
+  {
+   "epoch": 19,
+   "train_loss": 0.3669164570340191,
+   "val_loss": 1.328423687171936,
+   "val_cat_r1": 88.79310488700867,
+   "val_inst_r1": 51.253920793533325,
+   "temperature": 0.03816284253081558,
+   "seconds": 161.16130995750427
+  },
+  {
+   "epoch": 20,
+   "train_loss": 0.3562464642237468,
+   "val_loss": 1.3279877616882325,
+   "val_cat_r1": 88.79310488700867,
+   "val_inst_r1": 51.22779607772827,
+   "temperature": 0.03815839290608832,
+   "seconds": 156.2815330028534
+  }
+ ]
+}

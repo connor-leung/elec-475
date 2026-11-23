@@ -21,3 +21,7 @@ __pycache__/
 .DS_Store
 .vscode/
 .idea/
+
+# Lab 5: model weights and the generated submission zip
+*.pt
+lab5/runs_for_submission.zip
